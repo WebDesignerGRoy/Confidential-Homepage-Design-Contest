@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Revamp365 | AI-Native All-in-One for Real Estate Investors</title>
+<meta name="description" content="Data, MLS, CRM, automations, and AI that actually does the work — in one login. Start free with $5 credit, no card required." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ RESET & TOKENS ============ */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#070b0a;
+    --bg-2:#0a100e;
+    --card:#0e1513;
+    --card-2:#111a17;
+    --line:rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.14);
+    --text:#eaf2ee;
+    --muted:#93a69e;
+    --dim:#5f7169;
+    --accent:#2ee6a8;
+    --accent-2:#8ef7cf;
+    --accent-dark:#0b3d2c;
+    --red:#ff8585;
+    --radius:16px;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#04140d}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--font-display);line-height:1.15;font-weight:600;letter-spacing:-.02em}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  section{padding:96px 0;position:relative}
+
+  /* ============ REVEAL ANIMATION ============ */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+  /* ============ BUTTONS ============ */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    padding:14px 26px;border-radius:12px;cursor:pointer;
+    transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s;
+    border:1px solid transparent;white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#04140d;box-shadow:0 0 0 0 rgba(46,230,168,.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(46,230,168,.28)}
+  .btn-ghost{border-color:var(--line-strong);color:var(--text);background:rgba(255,255,255,.02)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .btn-sm{padding:10px 18px;font-size:14px;border-radius:10px}
+
+  /* ============ NAV ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    transition:background .3s,border-color .3s,backdrop-filter .3s;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{background:rgba(7,11,10,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{font-family:var(--font-display);font-weight:700;font-size:20px;display:flex;align-items:center;gap:10px}
+  .logo-mark{
+    width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04140d;
+    font-size:16px;font-weight:700;
+  }
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:14.5px;color:var(--muted);transition:color .2s;font-weight:500}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{display:flex;align-items:center;gap:12px}
+  .hamburger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
+
+  /* ============ HERO ============ */
+  .hero{padding:180px 0 90px;overflow:hidden}
+  .hero::before{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(700px 420px at 78% 8%,rgba(46,230,168,.14),transparent 65%),
+      radial-gradient(600px 400px at 12% 30%,rgba(46,230,168,.05),transparent 60%);
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(720px 480px at 70% 20%,#000 20%,transparent 75%);
+    -webkit-mask-image:radial-gradient(720px 480px at 70% 20%,#000 20%,transparent 75%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:1}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:600;color:var(--accent-2);
+    border:1px solid rgba(46,230,168,.3);background:rgba(46,230,168,.07);
+    padding:7px 14px;border-radius:999px;margin-bottom:24px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,230,168,.5)}50%{box-shadow:0 0 0 6px rgba(46,230,168,0)}}
+  .hero h1{font-size:clamp(38px,5vw,60px);font-weight:700;margin-bottom:22px}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:34px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+  .hero-note{font-size:13.5px;color:var(--dim);display:flex;align-items:center;gap:8px}
+  .hero-note svg{flex-shrink:0}
+
+  /* Hero mock dashboard */
+  .mock-wrap{position:relative}
+  .mock{
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    border:1px solid var(--line-strong);border-radius:20px;
+    padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .mock-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .mock-addr{font-family:var(--font-display);font-weight:600;font-size:16px}
+  .mock-addr span{display:block;font-family:var(--font-body);font-weight:400;font-size:12.5px;color:var(--muted)}
+  .tag{font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 10px;border-radius:7px}
+  .tag-off{background:rgba(46,230,168,.14);color:var(--accent);border:1px solid rgba(46,230,168,.3)}
+  .mock-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+  .mstat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center}
+  .mstat b{display:block;font-family:var(--font-display);font-size:17px;color:var(--accent-2)}
+  .mstat small{font-size:10.5px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
+  .mock-chart{display:flex;align-items:flex-end;gap:8px;height:84px;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px}
+  .bar{flex:1;background:linear-gradient(180deg,rgba(46,230,168,.75),rgba(46,230,168,.15));border-radius:4px 4px 0 0;animation:grow 1.2s ease both}
+  @keyframes grow{from{height:0!important}}
+  .chip{
+    position:absolute;display:flex;align-items:center;gap:10px;
+    background:rgba(14,21,19,.92);backdrop-filter:blur(10px);
+    border:1px solid var(--line-strong);border-radius:14px;
+    padding:12px 16px;font-size:13px;box-shadow:0 16px 40px rgba(0,0,0,.5);
+    animation:float 5s ease-in-out infinite;
+  }
+  .chip .ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(46,230,168,.14);color:var(--accent);flex-shrink:0}
+  .chip b{display:block;font-size:12.5px}
+  .chip small{color:var(--muted);font-size:11.5px}
+  .chip-1{top:-26px;right:-10px}
+  .chip-2{bottom:-24px;left:-14px;animation-delay:2.5s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .chip .ok{color:var(--accent);font-weight:600}
+
+  /* ============ MARQUEE / DATA SOURCES ============ */
+  .sources{padding:44px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sources-label{text-align:center;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:24px}
+  .marquee{overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .marquee-track{display:flex;gap:64px;width:max-content;animation:scroll 26s linear infinite}
+  .marquee-track span{font-family:var(--font-display);font-weight:600;font-size:17px;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:10px}
+  .marquee-track span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.55}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ============ SECTION HEADERS ============ */
+  .sec-head{text-align:center;max-width:680px;margin:0 auto 60px}
+  .kicker{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .sec-head h2{font-size:clamp(30px,4vw,44px);margin-bottom:16px}
+  .sec-head p{color:var(--muted);font-size:17px}
+
+  /* ============ FEATURES GRID ============ */
+  .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .fcard{
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 22px;transition:transform .25s ease,border-color .25s,box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .fcard:hover{transform:translateY(-5px);border-color:rgba(46,230,168,.4);box-shadow:0 16px 44px rgba(0,0,0,.4)}
+  .fcard.wide{grid-column:span 2}
+  .fcard .fico{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
+    background:rgba(46,230,168,.1);border:1px solid rgba(46,230,168,.22);color:var(--accent);
+  }
+  .fcard h3{font-size:18px;margin-bottom:9px}
+  .fcard p{font-size:14px;color:var(--muted);margin-bottom:14px}
+  .fcard ul{list-style:none;font-size:13.5px;color:var(--muted)}
+  .fcard ul li{padding:5px 0 5px 24px;position:relative}
+  .fcard ul li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700}
+  .fcard .flink{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13.5px;font-weight:600;color:var(--accent)}
+  .fcard .flink:hover{gap:10px}
+  .fcard .flink{transition:gap .2s}
+
+  /* ============ COMPARISON ============ */
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:960px;margin:0 auto}
+  .vs-col{border-radius:20px;padding:34px 30px;border:1px solid var(--line)}
+  .vs-old{background:linear-gradient(180deg,rgba(255,133,133,.05),transparent);border-color:rgba(255,133,133,.18)}
+  .vs-new{background:linear-gradient(180deg,rgba(46,230,168,.07),transparent);border-color:rgba(46,230,168,.3);position:relative}
+  .vs-col h3{font-size:20px;margin-bottom:6px}
+  .vs-col .sub{font-size:13.5px;color:var(--muted);margin-bottom:24px}
+  .vs-col ul{list-style:none}
+  .vs-col li{display:flex;gap:12px;padding:11px 0;font-size:14.5px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  .vs-col li:last-child{border:0}
+  .vs-old li{color:#c9a5a5}
+  .vs-new li{color:var(--text)}
+  .vs-x,.vs-c{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+  .vs-x{background:rgba(255,133,133,.12);color:var(--red)}
+  .vs-c{background:rgba(46,230,168,.14);color:var(--accent)}
+  .vs-flag{
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04140d;
+    font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:6px 16px;border-radius:999px;white-space:nowrap;
+  }
+
+  /* ============ MARKET SNAPSHOT ============ */
+  .market{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .market-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stat-tile{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;transition:border-color .25s,transform .25s;
+  }
+  .stat-tile:hover{border-color:rgba(46,230,168,.35);transform:translateY(-3px)}
+  .stat-tile small{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .stat-tile .num{font-family:var(--font-display);font-size:34px;font-weight:700;color:var(--text);margin:6px 0 2px}
+  .stat-tile .delta{font-size:12.5px;font-weight:600}
+  .up{color:var(--accent)}.flat{color:var(--muted)}
+  .live-feed{
+    margin-top:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 20px;
+    display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);min-height:56px;
+  }
+  .live-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite;flex-shrink:0}
+  .live-feed b{color:var(--accent-2)}
+  .feed-txt{transition:opacity .4s}
+  .feed-txt.fade{opacity:0}
+
+  /* ============ INSIGHTS ============ */
+  .big-num{text-align:center;margin-bottom:56px}
+  .big-num .bn{font-family:var(--font-display);font-size:clamp(64px,9vw,110px);font-weight:700;background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pillar{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;transition:border-color .25s}
+  .pillar:hover{border-color:rgba(46,230,168,.35)}
+  .pillar h3{font-size:18px;margin:16px 0 10px}
+  .pillar p{font-size:14.5px;color:var(--muted)}
+  .pillar .fico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:rgba(46,230,168,.1);border:1px solid rgba(46,230,168,.22);color:var(--accent)}
+
+  /* ============ TESTIMONIALS ============ */
+  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:18px;transition:transform .25s,border-color .25s}
+  .tcard:hover{transform:translateY(-4px);border-color:rgba(46,230,168,.3)}
+  .tcard .stars{color:var(--accent);letter-spacing:3px;font-size:14px}
+  .tcard p{font-size:14.5px;color:var(--text);flex:1}
+  .tcard .who{display:flex;align-items:center;gap:12px}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent-dark),var(--accent));display:grid;place-items:center;font-weight:700;font-size:14px;color:#04140d;font-family:var(--font-display)}
+  .who b{display:block;font-size:14px}
+  .who small{color:var(--dim);font-size:12.5px}
+
+  /* ============ FAQ ============ */
+  .faq-list{max-width:760px;margin:0 auto}
+  details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:border-color .25s}
+  details[open]{border-color:rgba(46,230,168,.35)}
+  summary{
+    cursor:pointer;list-style:none;padding:20px 24px;
+    font-family:var(--font-display);font-weight:600;font-size:16px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .chev{color:var(--accent);font-size:22px;font-weight:400;transition:transform .3s;line-height:1}
+  details[open] .chev{transform:rotate(45deg)}
+  details .body{padding:0 24px 22px;color:var(--muted);font-size:14.5px}
+
+  /* ============ FINAL CTA ============ */
+  .final{
+    margin:0 24px;border-radius:28px;overflow:hidden;
+    background:
+      radial-gradient(600px 300px at 50% 0%,rgba(46,230,168,.18),transparent 70%),
+      linear-gradient(180deg,var(--card-2),var(--card));
+    border:1px solid var(--line-strong);
+    text-align:center;padding:88px 24px;
+  }
+  .final h2{font-size:clamp(32px,4.5vw,50px);margin-bottom:16px}
+  .final p{color:var(--muted);max-width:520px;margin:0 auto 34px;font-size:17px}
+  .final .chiprow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+  .mini-chip{font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.02)}
+
+  /* ============ FOOTER ============ */
+  footer{border-top:1px solid var(--line);padding:60px 0 36px;margin-top:96px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+  .foot-grid p{font-size:13.5px;color:var(--dim);margin-top:14px;max-width:280px}
+  .foot-col h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:18px;font-weight:600}
+  .foot-col a{display:block;font-size:14px;color:var(--muted);padding:5px 0;transition:color .2s}
+  .foot-col a:hover{color:var(--accent)}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--dim)}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:1020px){
+    .features-grid{grid-template-columns:repeat(2,1fr)}
+    .fcard.wide{grid-column:span 2}
+    .market-grid{grid-template-columns:1fr;gap:44px}
+    .pillars,.t-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero{padding:140px 0 70px}
+    .mock-wrap{max-width:520px}
+    .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:rgba(7,11,10,.97);backdrop-filter:blur(16px);flex-direction:column;padding:24px;gap:8px;border-bottom:1px solid var(--line)}
+    .nav-links.open{display:flex}
+    .nav-links a{display:block;padding:12px 8px;font-size:16px}
+    .hamburger{display:block}
+    .nav-cta .btn-ghost{display:none}
+    section{padding:70px 0}
+  }
+  @media(max-width:560px){
+    .features-grid{grid-template-columns:1fr}
+    .fcard.wide{grid-column:span 1}
+    .vs-grid{grid-template-columns:1fr}
+    .stats-row{grid-template-columns:1fr 1fr}
+    .foot-grid{grid-template-columns:1fr}
+    .chip-1{right:0}.chip-2{left:0}
+    .hero-ctas .btn{width:100%;justify-content:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header id="header">
+  <div class="wrap nav">
+    <a href="#" class="logo"><span class="logo-mark">R</span>Revamp<span style="color:var(--accent)">365</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Platform</a></li>
+      <li><a href="#compare">Why Revamp</a></li>
+      <li><a href="#market">Market Data</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="#" class="btn btn-primary btn-sm">Start free</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badge reveal"><span class="dot"></span> AI-Native · Built for Investors, Not Tourists</div>
+      <h1 class="reveal d1">The investor OS where AI <span class="grad">actually does the work.</span></h1>
+      <p class="lead reveal d2">Data, MLS, CRM, automations, and AI voice agents — in one login. Not bolted-on chatbots or notes. As AI improves, so does your entire stack.</p>
+      <div class="hero-ctas reveal d3">
+        <a href="#" class="btn btn-primary">Start free — $5 credit →</a>
+        <a href="#features" class="btn btn-ghost">See it in action</a>
+      </div>
+      <div class="hero-note reveal d4">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        No card required · Powering 1,400+ investors
+      </div>
+    </div>
+
+    <!-- Mock dashboard -->
+    <div class="mock-wrap reveal d2">
+      <div class="mock">
+        <div class="mock-head">
+          <div class="mock-addr">1428 Maple Ave<span>Dallas, TX 75215 · Off-Market</span></div>
+          <span class="tag tag-off">NEW MATCH</span>
+        </div>
+        <div class="mock-stats">
+          <div class="mstat"><b>$312k</b><small>ARV</small></div>
+          <div class="mstat"><b>$28k</b><small>Rehab</small></div>
+          <div class="mstat"><b>$196k</b><small>Offer</small></div>
+          <div class="mstat"><b>34%</b><small>ROI</small></div>
+        </div>
+        <div class="mock-chart">
+          <div class="bar" style="height:45%;animation-delay:.1s"></div>
+          <div class="bar" style="height:62%;animation-delay:.2s"></div>
+          <div class="bar" style="height:55%;animation-delay:.3s"></div>
+          <div class="bar" style="height:78%;animation-delay:.4s"></div>
+          <div class="bar" style="height:70%;animation-delay:.5s"></div>
+          <div class="bar" style="height:92%;animation-delay:.6s"></div>
+          <div class="bar" style="height:84%;animation-delay:.7s"></div>
+        </div>
+      </div>
+      <div class="chip chip-1">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg>
+        </div>
+        <div><b>AI Voice Agent</b><small>Objection handled · <span class="ok">Appointment booked ✓</span></small></div>
+      </div>
+      <div class="chip chip-2">
+        <div class="ico">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div><b>Deal Finder</b><small>3 new properties match your buy box</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATA SOURCES MARQUEE ============ -->
+<div class="sources">
+  <div class="sources-label">Powering 1,400+ investors with data from</div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>MLS Direct</span><span>Public Records</span><span>Twilio</span><span>OpenAI</span><span>Anthropic</span><span>70B+ Property Insights</span>
+      <span>MLS Direct</span><span>Public Records</span><span>Twilio</span><span>OpenAI</span><span>Anthropic</span><span>70B+ Property Insights</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FEATURES ============ -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">One Platform to Replace Them All</div>
+      <h2>Stop duct-taping a dozen logins.</h2>
+      <p>MLS data, comps, skip tracing, CRM, phone system, AI voice follow-up, SMS, offers, and automations — all under one roof.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="fcard wide reveal">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg></div>
+        <h3>AI Voice Agents — your 24/7 negotiation team</h3>
+        <p>Lead follow-up, qualification, and objection handling on autopilot while your team focuses on real opportunities.</p>
+        <ul>
+          <li>Consistent follow-up without hiring more callers</li>
+          <li>Respond to interested leads instantly, day or night</li>
+          <li>Book meetings before your team logs in</li>
+        </ul>
+        <a class="flink" href="#">Explore AI Voice Agents →</a>
+      </div>
+
+      <div class="fcard reveal d1">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Investor CRM</h3>
+        <p>Every contact from first touch to closed deal — one source of truth, nothing slips through.</p>
+        <a class="flink" href="#">Explore CRM →</a>
+      </div>
+
+      <div class="fcard reveal d2">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h3>AI Deal Finder</h3>
+        <p>Tell Revamp your buy box. Wake up to fresh MLS + off-market matches that already fit.</p>
+        <a class="flink" href="#">Explore Deal Finder →</a>
+      </div>
+
+      <div class="fcard reveal">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="17" x2="12" y2="17"/></svg></div>
+        <h3>Instant Deal Analysis</h3>
+        <p>ARV, comps, rehab, rental math, and ROI in one view. Know in minutes, not meetings.</p>
+        <a class="flink" href="#">Explore Analysis →</a>
+      </div>
+
+      <div class="fcard reveal d1">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div>
+        <h3>Automated Offers</h3>
+        <p>When a property clears your numbers, turn analysis into signed contracts — fast.</p>
+        <a class="flink" href="#">Explore Offers →</a>
+      </div>
+
+      <div class="fcard wide reveal d2">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Skip Tracing & Owner Data + Deal Marketplace</h3>
+        <p>Reach tired landlords and distressed sellers with layered distress, equity, and ownership signals — then push deals to active cash buyers when it's time to disposition.</p>
+        <a class="flink" href="#">Explore Skip Tracing →</a>&nbsp;&nbsp;<a class="flink" href="#">Explore Marketplace →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section id="compare" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Stop Driving for Dollars</div>
+      <h2>Scattered stack vs. one system that closes.</h2>
+      <p>See why 1,400+ investors switched from duct-taped workflows to Revamp365.</p>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-col vs-old reveal">
+        <h3>The old stack</h3>
+        <div class="sub">PropStream + Podio + dialer + VAs + prayers</div>
+        <ul>
+          <li><span class="vs-x">✕</span>Paying $99/mo just for raw data lists</li>
+          <li><span class="vs-x">✕</span>Hiring VAs for endless phone follow-up</li>
+          <li><span class="vs-x">✕</span>Guessing on rehab costs and ARV</li>
+          <li><span class="vs-x">✕</span>Manually drafting every contract</li>
+          <li><span class="vs-x">✕</span>Checking five sites to piece together one deal</li>
+          <li><span class="vs-x">✕</span>No centralized CRM — leads and buyers leak</li>
+        </ul>
+      </div>
+      <div class="vs-col vs-new reveal d1">
+        <span class="vs-flag">Revamp365</span>
+        <h3>One login</h3>
+        <div class="sub">AI-native, all-in-one investor operating system</div>
+        <ul>
+          <li><span class="vs-c">✓</span>Deal sourcing, data, and comps included</li>
+          <li><span class="vs-c">✓</span>AI voice agents work leads 24/7 — no VAs</li>
+          <li><span class="vs-c">✓</span>Instant ARV, rehab, and ROI on every property</li>
+          <li><span class="vs-c">✓</span>Automated offers and contract workflows</li>
+          <li><span class="vs-c">✓</span>MLS + off-market in a single search</li>
+          <li><span class="vs-c">✓</span>CRM, disposition, and buyers — all connected</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKET SNAPSHOT ============ -->
+<section id="market" class="market">
+  <div class="wrap market-grid">
+    <div class="reveal">
+      <div class="kicker">Live Market Context</div>
+      <h2 style="font-size:clamp(30px,4vw,44px);margin-bottom:16px">Dominate your local market.</h2>
+      <p style="color:var(--muted);margin-bottom:24px">Distressed inventory signals, wholesale fee benchmarks, and buyer activity — layered into one live view so you move with conviction.</p>
+      <div class="live-feed">
+        <span class="live-dot"></span>
+        <span class="feed-txt" id="feedTxt">New distress signal: <b>742 Elm St</b> — Notice of Default filed</span>
+      </div>
+    </div>
+    <div class="stats-row reveal d1">
+      <div class="stat-tile">
+        <small>Distressed Inventory</small>
+        <div class="num" data-count="1204" data-format="comma">0</div>
+        <span class="delta up">↑ 12% vs last mo</span>
+      </div>
+      <div class="stat-tile">
+        <small>Avg Wholesale Fee</small>
+        <div class="num" data-count="18.5" data-prefix="$" data-suffix="k" data-decimals="1">$0k</div>
+        <span class="delta flat">— stable</span>
+      </div>
+      <div class="stat-tile">
+        <small>Foreclosures</small>
+        <div class="num" data-count="342">0</div>
+        <span class="delta up">↑ 5% increase</span>
+      </div>
+      <div class="stat-tile">
+        <small>Active Cash Buyers</small>
+        <div class="num" data-count="85">0</div>
+        <span class="delta flat">Live feed active</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSIGHTS ============ -->
+<section>
+  <div class="wrap">
+    <div class="big-num reveal">
+      <div class="bn"><span data-count="70">0</span>B+</div>
+      <p style="color:var(--muted);margin-top:8px">property insights powering every decision</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Nationwide Coverage</h3>
+        <p>Beyond one county or one list. Expand with confidence when the next market opens up.</p>
+      </div>
+      <div class="pillar reveal d1">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Real-Time Signal Monitoring</h3>
+        <p>Fresh updates that help you react faster when new opportunities or shifts show up.</p>
+      </div>
+      <div class="pillar reveal d2">
+        <div class="fico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93L12 10v2h3a3 3 0 0 1 3 3v1h1a2 2 0 0 1 2 2v4h-6v-4a2 2 0 0 1 2-2v-1a1 1 0 0 0-1-1h-8a1 1 0 0 0-1 1v1a2 2 0 0 1 2 2v4H2v-4a2 2 0 0 1 2-2h1v-1a3 3 0 0 1 3-3h3v-2l-.75-.07A4 4 0 1 1 12 2z"/></svg></div>
+        <h3>AI-Powered Pattern Recognition</h3>
+        <p>Surface opportunities that are easy to miss with manual searches and gut feel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<!-- NOTE: placeholder quotes — replace with real user testimonials -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Testimonials</div>
+      <h2>What our users say</h2>
+    </div>
+    <div class="t-grid">
+      <div class="tcard reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I cancelled PropStream, my dialer, and two VA contracts in the first month. The AI agent books more appointments than my old team ever did."</p>
+        <div class="who"><div class="avatar">MK</div><div><b>Michael K.</b><small>Wholesaler · Dallas, TX</small></div></div>
+      </div>
+      <div class="tcard reveal d1">
+        <div class="stars">★★★★★</div>
+        <p>"Underwriting used to take me an hour per property across four tabs. Now I open the property and the full deal math is just… there."</p>
+        <div class="who"><div class="avatar">SR</div><div><b>Sarah R.</b><small>Flipper · Atlanta, GA</small></div></div>
+      </div>
+      <div class="tcard reveal d2">
+        <div class="stars">★★★★★</div>
+        <p>"The Deal Finder feeds my pipeline every morning while I sleep. I wake up to matches that already fit my buy box. Game changer."</p>
+        <div class="who"><div class="avatar">JT</div><div><b>James T.</b><small>Acquisitions Team Lead · Phoenix, AZ</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">FAQ</div>
+      <h2>Questions, answered</h2>
+    </div>
+    <div class="faq-list reveal d1">
+      <details>
+        <summary>What is Revamp365?<span class="chev">+</span></summary>
+        <div class="body">Revamp365 is an AI-native all-in-one SaaS platform for real estate investors. It combines property data, MLS and off-market search, skip tracing, CRM, SMS, AI voice agents, deal analysis, offers, and automations in one system — so you don't need a PropStream + CRM + dialer + chatbot stack.</div>
+      </details>
+      <details>
+        <summary>What does it replace?<span class="chev">+</span></summary>
+        <div class="body">Separate subscriptions for data (PropStream, BatchLeads), CRM (Podio, REsimpli), dialers, skip tracing vendors, SMS platforms, and AI tools — consolidated into one login.</div>
+      </details>
+      <details>
+        <summary>Who is it for?<span class="chev">+</span></summary>
+        <div class="body">Wholesalers, flippers, landlords, and acquisition teams who want faster deal flow without juggling disconnected tools or hiring VAs for manual follow-up.</div>
+      </details>
+      <details>
+        <summary>Is there a free plan?<span class="chev">+</span></summary>
+        <div class="body">Yes. Start free with $5 in credit — no card required. Use the credit toward data, skip traces, SMS, or AI calls to test the platform before upgrading.</div>
+      </details>
+      <details>
+        <summary>Why AI-native?<span class="chev">+</span></summary>
+        <div class="body">AI is built into the core — voice agents, deal analysis, lead qualification — not bolted on as a third-party add-on. As AI improves, so does the whole stack.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<div class="wrap reveal">
+  <div class="final">
+    <div class="kicker">Limited Access</div>
+    <h2>Start free. One login.</h2>
+    <p>Data, MLS, CRM, automations, and AI that actually does the work — all in one AI-native platform.</p>
+    <a href="#" class="btn btn-primary">Claim $5 credit — no card required →</a>
+    <div class="chiprow">
+      <span class="mini-chip">✓ Find deals first</span>
+      <span class="mini-chip">✓ Consistent deal flow</span>
+      <span class="mini-chip">✓ Workflow automations</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="logo"><span class="logo-mark">R</span>Revamp<span style="color:var(--accent)">365</span></a>
+        <p>The AI-native all-in-one platform for real estate investors. Find, analyze, and close — in one login.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Platform</h4>
+        <a href="#">AI Voice Agents</a><a href="#">Investor CRM</a><a href="#">AI Deal Finder</a><a href="#">Instant Analysis</a><a href="#">Automated Offers</a>
+      </div>
+      <div class="foot-col">
+        <h4>Data</h4>
+        <a href="#">Skip Tracing</a><a href="#">MLS & Off-Market</a><a href="#">Deal Marketplace</a><a href="#">Market Signals</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">Revamp University</a><a href="#">Pricing</a><a href="#">Register</a><a href="#">Support</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Revamp365. All rights reserved.</span>
+      <span>Privacy · Terms · Data sourced from public records and MLS feeds.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Nav scroll state ----
+  const header = document.getElementById('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 20), {passive:true});
+
+  // ---- Mobile menu ----
+  const burger = document.getElementById('hamburger');
+  const links = document.getElementById('navLinks');
+  burger.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // ---- Scroll reveal ----
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold: .12});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---- Animated counters ----
+  function animateCount(el) {
+    const target = parseFloat(el.dataset.count);
+    const decimals = parseInt(el.dataset.decimals || 0);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const useComma = el.dataset.format === 'comma';
+    const dur = 1600, start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      let val = (target * eased).toFixed(decimals);
+      if (useComma) val = Number(val).toLocaleString('en-US');
+      el.textContent = prefix + val + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cio.unobserve(e.target); } });
+  }, {threshold: .5});
+  document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
+
+  // ---- Live feed ticker ----
+  const feedItems = [
+    'New distress signal: <b>742 Elm St</b> — Notice of Default filed',
+    '<b>3 new deals</b> matched your buy box in Dallas County',
+    'AI agent booked appointment: <b>815 Oak Ln</b> — motivated seller',
+    '<b>Cash buyer</b> activated: 4-unit portfolio, $1.2M budget',
+    'Foreclosure auction update: <b>221 Pine Ave</b> — 14 days out',
+    'High-equity alert: <b>63 Cedar Ct</b> — 68% equity, owned 22 yrs'
+  ];
+  let fi = 0;
+  const feedEl = document.getElementById('feedTxt');
+  setInterval(() => {
+    feedEl.classList.add('fade');
+    setTimeout(() => {
+      fi = (fi + 1) % feedItems.length;
+      feedEl.innerHTML = feedItems[fi];
+      feedEl.classList.remove('fade');
+    }, 400);
+  }, 3200);
+</script>
+</body>
+</html>
